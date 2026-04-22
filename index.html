@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+
+<head>
+	<base target="_top" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap");
+		@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap");
+
+		body {
+			font-family: "Kanit", sans-serif;
+			overscroll-behavior: none;
+		}
+
+		.mono {
+			font-family: "JetBrains Mono", monospace;
+			font-weight: 600;
+		}
+	</style>
+</head>
+
+<body class="bg-gradient-to-tl from-rose-50 via-pink-100 to-pink-200 overflow-hidden " style="min-height: 100dvh">
+	<!-- bg-gradient-to-tl from-fuchsia-50 to-pink-200 -->
+
+	<section class="flex flex-col items-center gap-16 w-full max-w-2xl mx-auto px-6 pt-24 pb-8 h-screen">
+		<header class="text-pink-700"> <!-- bg-gradient-to-bl from-pink-400 to-pink-300 px-10 py-9 text-white -->
+			<h1 class="text-3xl font-bold tracking-tight font-bold">ค้นหาเลขที่สมาชิก</h1>
+		</header>
+
+		<div class=" flex flex-col sm:flex-row gap-3 relative w-full">
+			<div>
+				<label class="text-sm font-medium text-pink-500 pl-1 mb-3 block">เลขที่สมาชิก</label>
+				<input id="examID" type="text" placeholder="33999" maxlength="5" oninput=""
+					class="mono w-full sm:flex-1 p-3 text-2xl bg-white border-4 border-pink-300 placeholder-gray-400 caret-pink-400 rounded-2xl text-center tracking-widest focus:outline-none focus:border-pink-400 transition-colors"
+					style="color: inherit" />
+			</div>
+			<div>
+				<label class="text-sm font-medium text-pink-500 pl-1 mb-3 block">เบอร์โทรศัพท์</label>
+				<input id="phoneNO" type="text" placeholder="0823323330" maxlength="10" oninput=""
+					class="mono w-full sm:flex-1 p-3 text-2xl bg-white border-4 border-pink-300 placeholder-gray-400 caret-pink-400 rounded-2xl text-center tracking-widest focus:outline-none focus:border-pink-400 transition-colors"
+					style="color: inherit" />
+			</div>
+		</div>
+
+
+		<footer class="border-t border-slate-200 px-8 py-3 text-center mb-12 text-xs text-pink-400">
+			<div class="flex items-center justify-center gap-x-3 gap-y-1">
+				<a href="" target="_blank" rel="noopener noreferrer"
+					class="inline-flex items-center gap-1.5 font-medium transition-colors">
+
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+						fill="currentColor">
+						<path
+							d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+					</svg>
+					Github
+				</a>
+				<span class="font-medium">·</span>
+				<a href="" target="_blank" rel="noopener noreferrer" className="transition-colors">
+					AGPL-3.0
+				</a>
+				<span class="">|</span>
+				<span class="">ID Lookup - δ</span>
+				<span class="font-medium">·</span>
+				<span class="">v2.2.2</span>
+			</div>
+		</footer>
+	</section>
+
+	<script>
+		const inputEl = document.getElementById("idInput");
+		let currentRow = null;
+		let currentCollected = false;
+		let searchId = 0;
+		let currentMode = "lookup";
+		let addRequestId = 0;
+
+		function toggleMode() {
+			currentMode = currentMode === "lookup" ? "insert" : "lookup";
+			document.getElementById("modeTitle").textContent =
+				currentMode === "lookup"
+					? "ค้นหาเลขที่นั่งสอบ"
+					: "เพิ่มเลขที่นั่งสอบ";
+			resetUI();
+
+			document.getElementById("idInput").value = "";
+			setInputColor("default");
+		}
+
+		function resetUI() {
+			searchId++;
+			addRequestId++;
+			setInputColor("default");
+
+			document.getElementById("resultCard").classList.add("hidden");
+			document.getElementById("statusLabel").classList.add("hidden");
+			document.getElementById("toggleBtn").classList.add("hidden");
+			document.getElementById("spinner").classList.add("hidden");
+
+			const card = document.getElementById("rangeCard");
+			card.classList.add("hidden");
+			// card.style.display = "none";
+
+			const addBtn = document.getElementById("addBtn");
+			addBtn.classList.add("hidden");
+			addBtn.disabled = false;
+			addBtn.textContent = "Add This ID";
+			addBtn.className =
+				"hidden w-full py-8 text-7xl rounded-3xl font-bold tracking-tight transition-all bg-pink-400 hover:bg-pink-300 active:bg-pink-500 text-white shadow-lg shadow-pink-300/40";
+
+			const err = document.getElementById("errorMsg");
+			err.style.display = "none";
+			err.textContent = "";
+
+			document.getElementById("resTimestamp").textContent = "";
+			document.getElementById("resName").textContent = "";
+			document.getElementById("resNotes").textContent = "";
+			document.getElementById("resRow").textContent = "";
+
+			currentRow = null;
+			currentCollected = false;
+		}
+
+		function handleInput(input) {
+			const val = input.value.replace(/\D/g, "").slice(0, 5);
+			input.value = val;
+
+			// searchId++;
+			resetUI();
+
+			if (val.length === 5) {
+				const num = parseInt(val, 10);
+				if (num < 10000 || num >= 50000) {
+					inputEl.style.color = "#fb64b6";
+
+					const err = document.getElementById("errorMsg");
+					err.textContent = "Invalid ID";
+					err.className =
+						"text-7xl font-bold tracking-tight text-center w-full text-pink-400";
+					err.style.display = "block";
+
+					// const card = document.getElementById("rangeCard");
+					// card.classList.remove("hidden");
+					// card.style.display = "none";
+					// card.offsetHeight;
+					// card.style.display = "";
+
+					const card = document.getElementById("rangeCard");
+					card.classList.remove("hidden");
+					// card.style.display = "";
+					return;
+				}
+				search(val, searchId);
+			}
+		}
+
+		function setInputColor(state) {
+			inputEl.style.color =
+				state === "found"
+					? "#4ade80"
+					: state === "notfound"
+						? "#ff6467"
+						: state === "error"
+							? "#fcd34d"
+							: "#1f2937";
+		}
+
+		function formatTimestamp(val) {
+			if (!val) return "—";
+			const d = new Date(val);
+			if (isNaN(d)) return String(val);
+			return d.toLocaleString("en-GB", {
+				day: "numeric",
+				month: "numeric",
+				year: "numeric",
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+				hour12: false,
+			});
+		}
+
+		function isCollected(status) {
+			return String(status).trim().toLowerCase() === "true";
+		}
+
+		function renderStatusLabel(collected) {
+			const label = document.getElementById("statusLabel");
+			const btn = document.getElementById("toggleBtn");
+
+			label.classList.add("hidden");
+
+			if (collected) {
+				btn.textContent = "Collected";
+				btn.className =
+					"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight transition-all bg-green-400 hover:bg-green-300 active:bg-green-500 text-white shadow-lg shadow-green-300/40 ring-1 ring-green-300/50";
+			} else {
+				btn.textContent = "Not Collected";
+				btn.className =
+					"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight transition-all bg-red-400 hover:bg-red-300 active:bg-red-500 text-white shadow-lg shadow-red-300/40 ring-1 ring-red-300/50";
+			}
+
+			btn.disabled = false;
+			btn.classList.remove("hidden");
+		}
+
+		function renderToggleBtn(collected) {
+			renderStatusLabel(collected);
+		}
+
+		function toggleStatus() {
+			if (currentRow === null) return;
+
+			const btn = document.getElementById("toggleBtn");
+			btn.disabled = true;
+			btn.textContent = "Updating...";
+			btn.className =
+				"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight bg-yellow-300 text-white cursor-not-allowed shadow-lg shadow-yellow-200/40 ring-1 ring-yellow-200/50";
+
+			const newCollected = !currentCollected;
+
+			google.script.run
+				.withSuccessHandler(() => {
+					btn.disabled = false;
+					currentCollected = newCollected;
+					renderStatusLabel(newCollected);
+				})
+				.withFailureHandler(() => {
+					btn.disabled = false;
+					renderStatusLabel(currentCollected);
+					alert("Failed to update. Try again.");
+				})
+				.setStatus(currentRow, newCollected);
+		}
+
+		function search(id, sid) {
+			const spinner = document.getElementById("spinner");
+			spinner.classList.remove("hidden");
+
+			google.script.run
+				.withSuccessHandler((res) => {
+					if (sid !== searchId) return;
+					spinner.classList.add("hidden");
+
+					if (res.found) {
+						setInputColor("found");
+						currentRow = res.row;
+						currentCollected = isCollected(res.status);
+
+						document.getElementById("resTimestamp").textContent =
+							formatTimestamp(res.timestamp);
+						document.getElementById("resName").textContent = res.name || "—";
+						document.getElementById("resNotes").textContent =
+							res.notes || "—";
+						document.getElementById("resRow").textContent = res.row || "—";
+
+						document.getElementById("resultCard").classList.remove("hidden");
+						renderStatusLabel(currentCollected);
+					} else {
+						setInputColor("notfound");
+						const err = document.getElementById("errorMsg");
+						err.style.display = "block";
+
+						if (currentMode === "insert") {
+							err.textContent = "Not Found";
+							err.className =
+								"text-7xl font-bold tracking-tight text-center w-full text-red-400";
+
+							document.getElementById("addBtn").classList.remove("hidden");
+						} else {
+							err.textContent = "Not Found";
+							err.className =
+								"text-7xl font-bold tracking-tight text-center w-full text-red-400";
+						}
+					}
+				})
+				.withFailureHandler(() => {
+					if (sid !== searchId) return;
+					spinner.classList.add("hidden");
+					setInputColor("error");
+					const err = document.getElementById("errorMsg");
+					err.textContent = "Error";
+					err.className =
+						"text-7xl font-bold tracking-tight text-center w-full text-yellow-300";
+					err.style.display = "block";
+				})
+				.findID(id);
+		}
+
+		function addID() {
+			const btn = document.getElementById("addBtn");
+			btn.disabled = true;
+			btn.textContent = "Adding...";
+			btn.className =
+				"w-full py-8 text-7xl rounded-3xl font-bold tracking-tight bg-yellow-300 text-white cursor-not-allowed shadow-lg shadow-yellow-200/40";
+
+			const id = document.getElementById("idInput").value;
+			const currentAddId = ++addRequestId;
+
+			google.script.run
+				.withSuccessHandler(() => {
+					if (currentAddId !== addRequestId) return;
+					btn.disabled = true;
+					btn.classList.add("hidden");
+					const err = document.getElementById("errorMsg");
+					err.textContent = "Added!";
+					err.className =
+						"text-7xl font-bold tracking-tight text-center w-full text-green-400";
+					err.style.display = "block";
+				})
+				.withFailureHandler(() => {
+					if (currentAddId !== addRequestId) return;
+					btn.disabled = false;
+					btn.textContent = "Add This ID";
+					btn.className =
+						"w-full py-8 text-7xl rounded-3xl font-bold tracking-tight transition-all bg-pink-400 hover:bg-pink-300 active:bg-pink-500 text-white shadow-lg shadow-pink-300/40";
+					alert("Failed to add. Try again.");
+				})
+				.addID(id);
+		}
+	</script>
+</body>
+
+</html>
