@@ -1,21 +1,21 @@
 function myFunction() {
-  // if (MailApp.getRemainingDailyQuota() == 0.0) return;
-  // else Logger.log(MailApp.getRemainingDailyQuota());
+	// if (MailApp.getRemainingDailyQuota() == 0.0) return;
+	// else Logger.log(MailApp.getRemainingDailyQuota());
   
-  Logger.log(MailApp.getRemainingDailyQuota());
-  retryEmailByRow(167);
+	// Logger.log(MailApp.getRemainingDailyQuota());
+	// retryEmailByRow(167);
 
-  // retryEmailByRow(865);
-  // <-- Stop -->
+	// retryEmailByRow(865);
+	// <!-- Stop -->
 
-  // for (let i = 826; i <= 832; i++) {
-	//  	retryEmailByRow(i);
+	// for (let i = 826; i <= 832; i++) {
+	// 	retryEmailByRow(i);
 	// }
 
-  // let rows = [834, 835, 836, 837, 838, 841, 845, 849, 850, 851, 858, 859, 860, 862, 877, 878, 880, 881, 888, 891, 892, 893, 895, 897 , 898];
+	// let rows = [834, 835, 836, 837, 838, 841, 845, 849, 850, 851, 858, 859, 860, 862, 877, 878, 880, 881, 888, 891, 892, 893, 895, 897 , 898];
 
 	// for (let row of rows) {
-	//  	retryEmailByRow(row);
+	// 	retryEmailByRow(row);
 	// }
 }
 
@@ -26,34 +26,53 @@ function doGet() {
 
 function getData() {
 	const cache = CacheService.getScriptCache();
-	const cached = cache.get("idMap");
+	const cached = cache.get("examMap");
 	if (cached) return JSON.parse(cached);
 
-	const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Main");
+	const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Form Responses");
 	const values = sheet.getDataRange().getValues();
 
-	const idMap = Object.create(null);
+	const examMap = Object.create(null);
 
 	for (let i = 1; i < values.length; i++) {
-		const id = String(values[i][2]).trim();
-		if (!id) continue;
+		const examId = String(values[i][9]).trim();
+		if (!examId) continue;
 
-		idMap[id] = {
+		examMap[examId] = {
 			row: i + 1,
-			timestamp: values[i][0] ? String(values[i][0]) : "",
-			name: String(values[i][1] ?? ""),
-			status: String(values[i][3] ?? ""),
-			notes: String(values[i][4] ?? ""),
+			id: String(values[i][2] ?? "").trim(),
+			phone: String(values[i][7] ?? "").trim(),
 		};
 	}
 
 	try {
-		cache.put("idMap", JSON.stringify(idMap), 60);
+		cache.put("examMap", JSON.stringify(examMap), 60);
 	} catch (e) {
 		Logger.log("Cache put failed: " + e.message);
 	}
 
-	return idMap;
+	return examMap;
+}
+
+function findID(examId) {
+	try {
+		const examMap = getData();
+		const key = String(examId).trim();
+
+		if (Object.prototype.hasOwnProperty.call(examMap, key)) {
+			const entry = examMap[key];
+			return {
+				found: true,
+				row: entry.row,
+				id: entry.id,
+				phone: entry.phone,
+			};
+		}
+
+		return { found: false };
+	} catch (error) {
+		return { found: false, error: error.message };
+	}
 }
 
 function findID(ID) {
