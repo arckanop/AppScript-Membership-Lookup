@@ -6,11 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="https://cdn.tailwindcss.com"></script>
 	<style>
-		@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap");
-		@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap");
+		@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
 
 		body {
-			font-family: "Kanit", sans-serif;
+			font-family: "IBM Plex Sans Thai", sans-serif;
 			overscroll-behavior: none;
 		}
 
@@ -40,8 +39,6 @@
 		}
 
 		.pink-input:focus {
-			outline: none;
-			border-color: #f472b6;
 			box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.18);
 		}
 
@@ -114,9 +111,24 @@
 		<div class="glass-card rounded-3xl w-full max-w-md px-8 pt-9 pb-7 flex flex-col gap-7 fade-up fade-up-1">
 			<!-- bg-gradient-to-bl from-pink-400 to-pink-300 px-10 py-9 text-white -->
 			<header class="flex flex-col items-center gap-1 fade-up fade-up-2">
-				<h1 class="text-3xl font-bold tracking-tight text-pink-700">ค้นหาเลขที่สมาชิก TU89</h1>
+				<!-- <div
+					class="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-300/40 mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+						stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="11" cy="11" r="8" />
+						<path d="m21 21-4.35-4.35" />
+					</svg>
+				</div> -->
+				<h1 class="text-3xl font-bold tracking-tight text-pink-700 flex items-center gap-3">ค้นหาเลขที่สมาชิก
+					<!-- <span
+						class="bg-gradient-to-br from-pink-400 to-rose-400 text-white text-sm font-bold rounded-2xl shadow-lg shadow-pink-300/40 w-12 h-12 flex items-center justify-center shadow-lgmb-1">TU89</span> -->
+					<span
+						class="bg-pink-100 text-pink-700 text-sm font-bold rounded-full px-3 py-1 border border-pink-200">
+						TU89
+					</span>
+				</h1>
 				<p class="text-xs text-pink-400 font-light tracking-wide">
-					กรอกข้อมูลเพื่อค้นหาสมาชิก</p>
+					กรอกข้อมูลเพื่อค้นหาเลขที่สมาชิก</p>
 			</header>
 
 			<div class="flex flex-col gap-5 fade-up fade-up-3">
@@ -124,21 +136,48 @@
 				<div class="flex flex-col gap-1.5">
 					<label class="text-pink-400 font-medium text-xs tracking-widest block pl-1">เลขที่นั่งสอบ</label>
 					<!-- text-pink-500 -->
-					<input id="examID" type="text" placeholder="33999" maxlength="5" oninput=""
-						class="mono w-full sm:flex-1 p-3 text-2xl bg-white border-4 border-pink-300 placeholder-gray-400 caret-pink-400 rounded-2xl text-center tracking-widest focus:outline-none focus:border-pink-400 transition-colors"
-						style="color: inherit" />
+					<div class="relative">
+						<div class="absolute left-4 top-1/2 -translate-y-1/2 text-pink-300 pointer-events-none">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+								stroke-linejoin="round">
+								<rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+								<path d="M7 11V7a5 5 0 0 1 10 0v4" />
+							</svg>
+						</div>
+						<input id="examID" type="text" placeholder="33999" maxlength="5"
+							class="mono w-full caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5  focus:outline-none focus:border-pink-400 pink-input"
+							style="color: inherit" />
 						<!-- border-pink-300 bg-white border-4 -->
+					</div>
 				</div>
-				
+
 				<div class="flex flex-col gap-1.5">
 					<label class="text-pink-400 font-medium text-xs tracking-widest block pl-1">เบอร์โทรศัพท์</label>
-					<input id="phoneNO" type="text" placeholder="0823323330" maxlength="10" oninput=""
-						class="mono w-full sm:flex-1 p-3 text-2xl bg-white border-4 border-pink-300 placeholder-gray-400 caret-pink-400 rounded-2xl text-center tracking-widest focus:outline-none focus:border-pink-400 transition-colors"
-						style="color: inherit" />
+					<!-- text-pink-500 -->
+					<div class="relative">
+						<div class="absolute left-4 top-1/2 -translate-y-1/2 text-pink-300 pointer-events-none">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+								stroke-linejoin="round">
+								<path
+									d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+							</svg>
+						</div>
+						<input id="phoneNO" type="text" placeholder="0823323330" maxlength="10"
+							class="mono w-full caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5  focus:outline-none focus:border-pink-400 pink-input"
+							style="color: inherit" />
+					</div>
 				</div>
 			</div>
 
-			<button class="fade-up fade-up-4 w-full py-3.5 rounded-2xl bg-gradient-to-r from-pink-400 to-rose-400 text-white font-semibold text-base tracking-wide shadow-lg shadow-pink-300/40 hover:from-pink-500 hover:to-rose-500 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+			<button
+				class="fade-up fade-up-4 w-full py-3.5 rounded-2xl bg-gradient-to-r from-pink-400 to-rose-400 text-white font-semibold text-base tracking-wide shadow-lg shadow-pink-300/40 hover:from-pink-500 hover:to-rose-500 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+				<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+					stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="11" cy="11" r="8" />
+					<path d="m21 21-4.35-4.35" />
+				</svg>
 				ค้นหาเลขที่สมาชิก
 			</button>
 		</div>
@@ -166,90 +205,14 @@
 	</section>
 
 	<script>
-		const inputEl = document.getElementById("idInput");
-		let currentRow = null;
-		let currentCollected = false;
 		let searchId = 0;
-		let currentMode = "lookup";
-		let addRequestId = 0;
-
-		function toggleMode() {
-			currentMode = currentMode === "lookup" ? "insert" : "lookup";
-			document.getElementById("modeTitle").textContent =
-				currentMode === "lookup"
-					? "ค้นหาเลขที่นั่งสอบ"
-					: "เพิ่มเลขที่นั่งสอบ";
-			resetUI();
-
-			document.getElementById("idInput").value = "";
-			setInputColor("default");
-		}
 
 		function resetUI() {
 			searchId++;
-			addRequestId++;
-			setInputColor("default");
-
-			document.getElementById("resultCard").classList.add("hidden");
-			document.getElementById("statusLabel").classList.add("hidden");
-			document.getElementById("toggleBtn").classList.add("hidden");
-			document.getElementById("spinner").classList.add("hidden");
-
-			const card = document.getElementById("rangeCard");
-			card.classList.add("hidden");
-			// card.style.display = "none";
-
-			const addBtn = document.getElementById("addBtn");
-			addBtn.classList.add("hidden");
-			addBtn.disabled = false;
-			addBtn.textContent = "Add This ID";
-			addBtn.className =
-				"hidden w-full py-8 text-7xl rounded-3xl font-bold tracking-tight transition-all bg-pink-400 hover:bg-pink-300 active:bg-pink-500 text-white shadow-lg shadow-pink-300/40";
-
-			const err = document.getElementById("errorMsg");
-			err.style.display = "none";
-			err.textContent = "";
-
-			document.getElementById("resTimestamp").textContent = "";
-			document.getElementById("resName").textContent = "";
-			document.getElementById("resNotes").textContent = "";
-			document.getElementById("resRow").textContent = "";
-
-			currentRow = null;
-			currentCollected = false;
-		}
-
-		function handleInput(input) {
-			const val = input.value.replace(/\D/g, "").slice(0, 5);
-			input.value = val;
-
-			// searchId++;
-			resetUI();
-
-			if (val.length === 5) {
-				const num = parseInt(val, 10);
-				if (num < 10000 || num >= 50000) {
-					inputEl.style.color = "#fb64b6";
-
-					const err = document.getElementById("errorMsg");
-					err.textContent = "Invalid ID";
-					err.className =
-						"text-7xl font-bold tracking-tight text-center w-full text-pink-400";
-					err.style.display = "block";
-
-					// const card = document.getElementById("rangeCard");
-					// card.classList.remove("hidden");
-					// card.style.display = "none";
-					// card.offsetHeight;
-					// card.style.display = "";
-
-					const card = document.getElementById("rangeCard");
-					card.classList.remove("hidden");
-					// card.style.display = "";
-					return;
-				}
-				search(val, searchId);
-			}
+			document.getElementById("resultCard")?.classList.add("hidden");
+			document.getElementById("errorMsg").style.display = "none";
+			document.getElementById("errorMsg").textContent = "";
+			document.getElementById("spinner")?.classList.add("hidden");
 		}
 
 		function setInputColor(state) {
@@ -263,158 +226,39 @@
 							: "#1f2937";
 		}
 
-		function formatTimestamp(val) {
-			if (!val) return "—";
-			const d = new Date(val);
-			if (isNaN(d)) return String(val);
-			return d.toLocaleString("en-GB", {
-				day: "numeric",
-				month: "numeric",
-				year: "numeric",
-				hour: "2-digit",
-				minute: "2-digit",
-				second: "2-digit",
-				hour12: false,
-			});
-		}
+		function search() {
+			const examId = document.getElementById("examID").value.trim();
+			const phone = document.getElementById("phoneNO").value.trim();
 
-		function isCollected(status) {
-			return String(status).trim().toLowerCase() === "true";
-		}
+			if (!examId || !phone) return;
 
-		function renderStatusLabel(collected) {
-			const label = document.getElementById("statusLabel");
-			const btn = document.getElementById("toggleBtn");
+			resetUI();
+			const sid = searchId;
 
-			label.classList.add("hidden");
-
-			if (collected) {
-				btn.textContent = "Collected";
-				btn.className =
-					"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight transition-all bg-green-400 hover:bg-green-300 active:bg-green-500 text-white shadow-lg shadow-green-300/40 ring-1 ring-green-300/50";
-			} else {
-				btn.textContent = "Not Collected";
-				btn.className =
-					"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight transition-all bg-red-400 hover:bg-red-300 active:bg-red-500 text-white shadow-lg shadow-red-300/40 ring-1 ring-red-300/50";
-			}
-
-			btn.disabled = false;
-			btn.classList.remove("hidden");
-		}
-
-		function renderToggleBtn(collected) {
-			renderStatusLabel(collected);
-		}
-
-		function toggleStatus() {
-			if (currentRow === null) return;
-
-			const btn = document.getElementById("toggleBtn");
-			btn.disabled = true;
-			btn.textContent = "Updating...";
-			btn.className =
-				"w-full py-8 text-7xl rounded-2xl font-bold tracking-tight bg-yellow-300 text-white cursor-not-allowed shadow-lg shadow-yellow-200/40 ring-1 ring-yellow-200/50";
-
-			const newCollected = !currentCollected;
-
-			google.script.run
-				.withSuccessHandler(() => {
-					btn.disabled = false;
-					currentCollected = newCollected;
-					renderStatusLabel(newCollected);
-				})
-				.withFailureHandler(() => {
-					btn.disabled = false;
-					renderStatusLabel(currentCollected);
-					alert("Failed to update. Try again.");
-				})
-				.setStatus(currentRow, newCollected);
-		}
-
-		function search(id, sid) {
-			const spinner = document.getElementById("spinner");
-			spinner.classList.remove("hidden");
+			document.getElementById("spinner")?.classList.remove("hidden");
 
 			google.script.run
 				.withSuccessHandler((res) => {
 					if (sid !== searchId) return;
-					spinner.classList.add("hidden");
+					document.getElementById("spinner")?.classList.add("hidden");
 
 					if (res.found) {
-						setInputColor("found");
-						currentRow = res.row;
-						currentCollected = isCollected(res.status);
-
-						document.getElementById("resTimestamp").textContent =
-							formatTimestamp(res.timestamp);
-						document.getElementById("resName").textContent = res.name || "—";
-						document.getElementById("resNotes").textContent =
-							res.notes || "—";
-						document.getElementById("resRow").textContent = res.row || "—";
-
+						document.getElementById("resMembershipId").textContent = res.membershipId;
 						document.getElementById("resultCard").classList.remove("hidden");
-						renderStatusLabel(currentCollected);
 					} else {
-						setInputColor("notfound");
 						const err = document.getElementById("errorMsg");
+						err.textContent = "ไม่พบข้อมูล";
 						err.style.display = "block";
-
-						if (currentMode === "insert") {
-							err.textContent = "Not Found";
-							err.className =
-								"text-7xl font-bold tracking-tight text-center w-full text-red-400";
-
-							document.getElementById("addBtn").classList.remove("hidden");
-						} else {
-							err.textContent = "Not Found";
-							err.className =
-								"text-7xl font-bold tracking-tight text-center w-full text-red-400";
-						}
 					}
 				})
 				.withFailureHandler(() => {
 					if (sid !== searchId) return;
-					spinner.classList.add("hidden");
-					setInputColor("error");
+					document.getElementById("spinner")?.classList.add("hidden");
 					const err = document.getElementById("errorMsg");
-					err.textContent = "Error";
-					err.className =
-						"text-7xl font-bold tracking-tight text-center w-full text-yellow-300";
+					err.textContent = "เกิดข้อผิดพลาด";
 					err.style.display = "block";
 				})
-				.findID(id);
-		}
-
-		function addID() {
-			const btn = document.getElementById("addBtn");
-			btn.disabled = true;
-			btn.textContent = "Adding...";
-			btn.className =
-				"w-full py-8 text-7xl rounded-3xl font-bold tracking-tight bg-yellow-300 text-white cursor-not-allowed shadow-lg shadow-yellow-200/40";
-
-			const id = document.getElementById("idInput").value;
-			const currentAddId = ++addRequestId;
-
-			google.script.run
-				.withSuccessHandler(() => {
-					if (currentAddId !== addRequestId) return;
-					btn.disabled = true;
-					btn.classList.add("hidden");
-					const err = document.getElementById("errorMsg");
-					err.textContent = "Added!";
-					err.className =
-						"text-7xl font-bold tracking-tight text-center w-full text-green-400";
-					err.style.display = "block";
-				})
-				.withFailureHandler(() => {
-					if (currentAddId !== addRequestId) return;
-					btn.disabled = false;
-					btn.textContent = "Add This ID";
-					btn.className =
-						"w-full py-8 text-7xl rounded-3xl font-bold tracking-tight transition-all bg-pink-400 hover:bg-pink-300 active:bg-pink-500 text-white shadow-lg shadow-pink-300/40";
-					alert("Failed to add. Try again.");
-				})
-				.addID(id);
+				.findID(examId, phone);
 		}
 	</script>
 </body>
