@@ -3,7 +3,7 @@
 
 <head>
 	<base target="_top" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 	<script src="https://cdn.tailwindcss.com"></script>
 	<style>
 		@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap");
@@ -137,36 +137,19 @@
 		#resultCard:not(.hidden) {
 			display: flex;
 		}
-
-		.error-state {
-			border-color: #d97706 !important;
-			box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
-		}
-
-		@media (max-width: 640px) {
-			h1 {
-				font-size: 1.5rem;
-			}
-
-			.glass-card {
-				margin: 0;
-				border-radius: 1.5rem;
-			}
-		}
 	</style>
 </head>
 
-<body class="bg-gradient-to-br from-rose-50 via-pink-100 to-pink-200 overflow-hidden " style="min-height: 100dvh">
+<body class="bg-gradient-to-br from-rose-50 via-pink-100 to-pink-200 overflow-x-hidden" style="min-height: 100dvh">
 	<!-- bg-gradient-to-tl from-fuchsia-50 to-pink-200 -->
 	<div class="blob" style="width:420px;height:420px;background:#f9a8d4;top:-80px;left:-100px;"></div>
 	<div class="blob" style="width:320px;height:320px;background:#fbcfe8;bottom:-60px;right:-60px;"></div>
 	<div class="blob" style="width:200px;height:200px;background:#fde68a;bottom:80px;left:30px;opacity:0.18;"></div>
 
-	<section
-		class="relative z-10 flex flex-col items-center justify-start sm:justify-center w-full min-h-dvh px-4 sm:px-5 pt-16 pb-6 sm:py-10">
+	<section class="relative z-10 flex flex-col items-center justify-center w-full min-h-dvh px-6 sm:px-5 py-10">
 		<!-- gap-16 max-w-2xl mx-auto h-screen-->
 		<div
-			class="glass-card rounded-3xl w-full max-w-md sm:max-w-md px-6 sm:px-8 pt-8 pb-6 flex flex-col gap-7 fade-up fade-up-1">
+			class="glass-card rounded-3xl w-full max-w-md mx-auto px-7 sm:px-8 pt-8 pb-6 flex flex-col gap-7 fade-up fade-up-1">
 			<!-- bg-gradient-to-bl from-pink-400 to-pink-300 px-10 py-9 text-white -->
 			<header class="flex flex-col items-center gap-1 fade-up fade-up-2">
 				<!-- <div
@@ -177,7 +160,8 @@
 						<path d="m21 21-4.35-4.35" />
 					</svg>
 				</div> -->
-				<h1 class="text-3xl font-bold tracking-tight text-pink-700 flex items-center gap-3">ค้นหาเลขที่สมาชิก
+				<h1 class="text-3xl font-bold tracking-tight text-pink-700 flex items-center gap-3">
+					ค้นหาเลขที่สมาชิก
 					<!-- <span
 						class="bg-gradient-to-br from-pink-400 to-rose-400 text-white text-sm font-bold rounded-2xl shadow-lg shadow-pink-300/40 w-12 h-12 flex items-center justify-center shadow-lgmb-1">TU89</span> -->
 					<span
@@ -204,9 +188,8 @@
 							</svg>
 						</div>
 						<input id="examID" type="tel" placeholder="19999" maxlength="5"
-							class="mono w-full caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5 focus:border-pink-400 pink-input"
-							style="color: inherit" oninput="handleExamInput(this)"
-							onkeydown="if(event.key==='Enter')trySearch()" autofocus />
+							class="mono w-full text-pink-700 caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5 focus:border-pink-400 pink-input"
+							oninput="handleExamInput(this)" onkeydown="if(event.key==='Enter')trySearch()" autofocus />
 						<!-- border-pink-300 bg-white border-4 -->
 					</div>
 				</div>
@@ -224,9 +207,9 @@
 							</svg>
 						</div>
 						<input id="phoneNO" type="tel" placeholder="0823323330" maxlength="10"
-							class="mono w-full caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5 focus:border-pink-400 pink-input"
-							style="color: inherit" oninput="handlePhoneInput(this)"
-							onkeydown="if(event.key==='Enter')trySearch()" />
+							class="mono w-full text-pink-700 caret-pink-400 rounded-2xl text-center transition-all border-pink-200 placeholder-pink-200 border-2 text-xl tracking-[0.2em] bg-white/80 pl-10 pr-4 py-3.5 focus:border-pink-400 pink-input"
+							oninput="handlePhoneInput(this)" onkeydown="if(event.key==='Enter')trySearch()" />
+						<!-- style="color: inherit" -->
 					</div>
 				</div>
 
@@ -247,9 +230,10 @@
 
 				<!-- <div id="errorMsg" class="text-center text-xl font-medium text-red-400 py-2" style="display:none"></div> -->
 				<div id="errorBox"
-					class="hidden flex items-center gap-3 px-5 py-4 rounded-2xl bg-amber-50 border-2 border-amber-300">
-					<div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5"
+					class="hidden flex items-center gap-3 px-5 py-4 rounded-2xl bg-amber-100 border-2 border-amber-400">
+					<div id="errorIcon"
+						class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"
 							stroke-linecap="round" stroke-linejoin="round">
 							<path
 								d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
@@ -257,7 +241,7 @@
 							<line x1="12" y1="17" x2="12.01" y2="17" />
 						</svg>
 					</div>
-					<p id="errorText" class="text-base font-semibold text-amber-900 leading-snug"></p>
+					<p id="errorText" class="text-base font-semibold text-amber-500 leading-snug"></p>
 				</div>
 
 				<div id="spinner" class="hidden flex justify-center py-2">
@@ -320,8 +304,7 @@
 				// const err = document.getElementById("errorMsg");
 				// err.textContent = "เลขที่นั่งสอบไม่ถูกต้อง";
 				// err.style.display = "block";
-				input.classList.add('error-state');   // ← added (orange border on input)
-				showError('เลขที่นั่งสอบไม่ถูกต้อง');
+				showNotFound("เลขที่นั่งสอบไม่ถูกต้อง");
 			} else {
 				// document.getElementById("errorMsg").style.display = "none";
 				// document.getElementById("errorMsg").textContent = "";
@@ -337,13 +320,27 @@
 			// document.getElementById("errorMsg").style.display = "none";
 			// document.getElementById("errorMsg").textContent = "";
 			// document.getElementById("spinner")?.classList.add("hidden");
-			document.getElementById('errorBox').classList.add('hidden');
 			// document.getElementById("resultCard").classList.remove('visible');
-			document.getElementById("resultCard").classList.add('hidden');
 			// document.getElementById('errorBox').classList.remove('visible');
 			// document.getElementById('spinner').classList.remove('visible');
+			document.getElementById("resultCard").classList.add('hidden');
+			document.getElementById('errorBox').classList.add('hidden');
 			document.getElementById('spinner').classList.add('hidden');
 			document.getElementById('searchBtn').style.display = '';
+
+			document.getElementById('examID').classList.remove('text-amber-500', 'text-red-500', 'text-green-500');
+			document.getElementById('phoneNO').classList.remove('text-amber-500', 'text-red-500', 'text-green-500');
+			document.getElementById('examID').classList.add('text-pink-700');
+			document.getElementById('phoneNO').classList.add('text-pink-700');
+
+			document.getElementById('errorBox').classList.remove('border-red-400', 'bg-red-100');
+			document.getElementById('errorBox').classList.add('border-amber-400', 'bg-amber-100');
+			document.getElementById('errorText').classList.remove('text-red-600');
+			document.getElementById('errorText').classList.add('text-amber-500');
+			document.getElementById('errorBox').querySelector('svg').setAttribute('stroke', '#f59e0b');
+
+			document.getElementById('errorIcon').classList.remove('bg-red-100');
+			document.getElementById('errorIcon').classList.add('bg-amber-100');
 		}
 
 		function trySearch() {
@@ -372,12 +369,20 @@
 						document.getElementById("resultCard").classList.remove("hidden");
 						document.getElementById("resultCard").classList.add("fade-in");
 						document.getElementById("searchBtn").style.display = 'none';
+
+						// document.getElementById('examID').classList.add('bg-green-50');
+						// document.getElementById('phoneNO').classList.add('bg-green-50');
+
+						document.getElementById('examID').classList.remove('text-pink-700');
+						document.getElementById('phoneNO').classList.remove('text-pink-700');
+						document.getElementById('examID').classList.add('text-green-500');
+						document.getElementById('phoneNO').classList.add('text-green-500');
 					} else {
 						// const err = document.getElementById("errorMsg");
 						// err.textContent = "ไม่พบข้อมูล";
 						// err.style.display = "block";
 						updateBtn();
-						showError('ไม่พบข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง');
+						showNotFound("ไม่พบข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง");
 					}
 				})
 				.withFailureHandler(() => {
@@ -411,10 +416,44 @@
 		}
 
 		function showError(msg) {
-			// document.getElementById('errorBox').classList.add('visible');
+			// // document.getElementById('errorBox').classList.add('visible');
+			// document.getElementById('errorBox').classList.remove('hidden');
+			// document.getElementById('errorText').textContent = msg;
+			// document.getElementById('searchBtn').disabled = true;
+
+			document.getElementById('errorText').textContent = msg;
+			// document.getElementById('examID').classList.add('bg-red-50');
+			// document.getElementById('phoneNO').classList.add('bg-red-50');
+			document.getElementById('errorBox').classList.remove('hidden');
+
+			document.getElementById('examID').classList.remove('text-pink-700');
+			document.getElementById('examID').classList.add('text-red-500');
+			document.getElementById('phoneNO').classList.remove('text-pink-700');
+			document.getElementById('phoneNO').classList.add('text-red-500');
+
+			document.getElementById('errorBox').classList.remove('border-amber-400', 'bg-amber-100');
+			document.getElementById('errorBox').classList.add('border-red-400', 'bg-red-100');
+			document.getElementById('errorText').classList.remove('text-amber-500');
+			document.getElementById('errorText').classList.add('text-red-600');
+
+			document.getElementById('errorIcon').classList.remove('bg-amber-100');
+			document.getElementById('errorIcon').classList.add('bg-red-100');
+
+			document.getElementById('errorBox').querySelector('svg').setAttribute('stroke', '#ef4444');
+			document.getElementById('searchBtn').disabled = true;
+		}
+
+		function showNotFound(msg) {
 			document.getElementById('errorBox').classList.remove('hidden');
 			document.getElementById('errorText').textContent = msg;
 			document.getElementById('searchBtn').disabled = true;
+			// document.getElementById('examID').classList.add('bg-amber-50');
+			// document.getElementById('phoneNO').classList.add('bg-amber-50');
+
+			document.getElementById('examID').classList.remove('text-pink-700');
+			document.getElementById('phoneNO').classList.remove('text-pink-700');
+			document.getElementById('examID').classList.add('text-amber-500');
+			document.getElementById('phoneNO').classList.add('text-amber-500');
 		}
 
 		function copyId() {
@@ -426,6 +465,10 @@
 				}, 2000);
 			});
 		}
+
+		window.addEventListener('load', () => {
+			document.getElementById('examID').focus();
+		});
 	</script>
 </body>
 

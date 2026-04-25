@@ -21,7 +21,9 @@ function myFunction() {
 
 function doGet() {
 	getData();
-	return HtmlService.createHtmlOutputFromFile("index.html");
+	return HtmlService
+        .createHtmlOutputFromFile('index.html')
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 function getData() {
@@ -39,14 +41,13 @@ function getData() {
 		if (!examId) continue;
 
 		examMap[examId] = {
-			row: i + 1,
 			id: String(values[i][2] ?? "").trim(),
 			phone: String(values[i][7] ?? "").trim(),
 		};
 	}
 
 	try {
-		cache.put("examMap", JSON.stringify(examMap), 60);
+		cache.put("examMap", JSON.stringify(examMap), 600);
 	} catch (e) {
 		Logger.log("Cache put failed: " + e.message);
 	}
@@ -54,48 +55,28 @@ function getData() {
 	return examMap;
 }
 
-function findID(examId) {
+function findID(examId, phone) {
 	try {
 		const examMap = getData();
 		const key = String(examId).trim();
 
-		if (Object.prototype.hasOwnProperty.call(examMap, key)) {
-			const entry = examMap[key];
-			return {
-				found: true,
-				row: entry.row,
-				id: entry.id,
-				phone: entry.phone,
-			};
+		if (!Object.prototype.hasOwnProperty.call(examMap, key)) {
+			return { found: false };
 		}
 
-		return { found: false };
+		const entry = examMap[key];
+		if (String(entry.phone).trim() !== String(phone).trim()) {
+			return { found: false };
+		}
+
+		return { found: true, membershipId: entry.id };
 	} catch (error) {
 		return { found: false, error: error.message };
 	}
 }
 
-function findID(ID) {
-	try {
-		const idMap = getData();
-		const key = String(ID).trim();
-
-		if (Object.prototype.hasOwnProperty.call(idMap, key)) {
-			const entry = idMap[key];
-			return {
-				found: true,
-				row: entry.row,
-				timestamp: entry.timestamp,
-				name: entry.name,
-				status: entry.status,
-				notes: entry.notes,
-			};
-		}
-
-		return { found: false };
-	} catch (error) {
-		return { found: false, error: error.message };
-	}
+function invalidateExamCache() {
+	CacheService.getScriptCache().remove("examMap");
 }
 
 function retryEmailByRow(row) {
@@ -194,6 +175,8 @@ function onFormSubmit(e) {
 
 		const row = e.range.getRow();
 		responseSheet.getRange(row, 3).setValue(membershipID);
+
+		invalidateExamCache()
 
 		const emailAddress = formData['Email Address']?.[0] || formData['ที่อยู่อีเมล']?.[0] || '';
 		if (emailAddress) {
