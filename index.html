@@ -142,6 +142,17 @@
 			border-color: #d97706 !important;
 			box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
 		}
+
+		@media (max-width: 640px) {
+			h1 {
+				font-size: 1.5rem;
+			}
+
+			.glass-card {
+				margin: 0;
+				border-radius: 1.5rem;
+			}
+		}
 	</style>
 </head>
 
@@ -151,9 +162,11 @@
 	<div class="blob" style="width:320px;height:320px;background:#fbcfe8;bottom:-60px;right:-60px;"></div>
 	<div class="blob" style="width:200px;height:200px;background:#fde68a;bottom:80px;left:30px;opacity:0.18;"></div>
 
-	<section class="relative z-10 flex flex-col items-center justify-center w-full min-h-dvh px-5 py-10">
+	<section
+		class="relative z-10 flex flex-col items-center justify-start sm:justify-center w-full min-h-dvh px-4 sm:px-5 pt-16 pb-6 sm:py-10">
 		<!-- gap-16 max-w-2xl mx-auto h-screen-->
-		<div class="glass-card rounded-3xl w-full max-w-md px-8 pt-9 pb-7 flex flex-col gap-7 fade-up fade-up-1">
+		<div
+			class="glass-card rounded-3xl w-full max-w-md sm:max-w-md px-6 sm:px-8 pt-8 pb-6 flex flex-col gap-7 fade-up fade-up-1">
 			<!-- bg-gradient-to-bl from-pink-400 to-pink-300 px-10 py-9 text-white -->
 			<header class="flex flex-col items-center gap-1 fade-up fade-up-2">
 				<!-- <div
